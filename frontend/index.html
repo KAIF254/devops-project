@@ -13,24 +13,22 @@
 
 <script>
 function sendData() {
+  const data = { name: "Kaif", time: 120 };
+
   fetch("https://devops-backend-iigs.onrender.com/data", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      name: "Kaif",
-      time: 120
-    })
+    body: JSON.stringify(data)
   })
   .then(res => res.json())
-  .then(data => {
-    alert(data.message);
-    console.log(data);
+  .then(res => {
+    alert(res.message);
+    console.log(res);
   })
   .catch(err => console.error(err));
 }
 </script>
-
 </body>
 </html>

@@ -132,55 +132,28 @@ footer {
 </footer>
 
 <script>
-const BASE = "https://devops-backend-iigs.onrender.com";
-
-/* AUTH */
-function signup(){
-  fetch(BASE+"/signup",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      username:username.value,
-      password:password.value
-    })
-  }).then(r=>r.json()).then(d=>alert(d.message));
-}
-
 function login(){
-  fetch(BASE+"/login",{
+  fetch("https://devops-backend-iigs.onrender.com/login",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({
       username:username.value,
       password:password.value
     })
-  }).then(r=>r.json()).then(d=>alert(d.message));
+  })
+  .then(res=>res.json())
+  .then(data=>{
+    alert(data.message);
+
+    if(data.message.includes("success")){
+      // store session
+      localStorage.setItem("user", username.value);
+
+      // redirect
+      window.location.href = "dashboard.html";
+    }
+  });
 }
-
-/* TIMER */
-let time=1500, interval;
-
-function update(){
-  let m=Math.floor(time/60);
-  let s=time%60;
-  document.getElementById("time").innerText=
-    `${m}:${s<10?"0":""}${s}`;
-}
-
-function start(){
-  interval=setInterval(()=>{
-    if(time>0){time--; update();}
-  },1000);
-}
-
-function reset(){
-  clearInterval(interval);
-  time=1500;
-  update();
-}
-
-update();
 </script>
-
 </body>
 </html>

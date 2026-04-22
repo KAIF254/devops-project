@@ -1,1 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<style>
+body {background:#0f172a; color:white; text-align:center;}
+button {padding:10px; margin:10px;}
+</style>
+</head>
 
+<body>
+
+<h1>Dashboard</h1>
+
+<p id="user"></p>
+<p id="time">Focus Time: 0 sec</p>
+
+<button onclick="addTime()">+10 sec</button>
+<button onclick="logout()">Logout</button>
+
+<script>
+let user = localStorage.getItem("user");
+let time = localStorage.getItem("time") || 0;
+
+document.getElementById("user").innerText = "User: " + user;
+document.getElementById("time").innerText = "Focus Time: " + time;
+
+function addTime(){
+  time = Number(time) + 10;
+  localStorage.setItem("time", time);
+  document.getElementById("time").innerText = "Focus Time: " + time;
+}
+
+function logout(){
+  localStorage.clear();
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

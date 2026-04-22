@@ -1,62 +1,186 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>DevOps Test</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FocusZone Pro</title>
+
+<style>
+:root {
+  --bg:#0b1220;
+  --card:#111827;
+  --accent:#6366f1;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+}
+
+body {
+  margin:0;
+  font-family:system-ui;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* Navbar */
+.nav {
+  display:flex;
+  justify-content:space-between;
+  padding:15px 40px;
+  background:#020617;
+}
+.nav h2 {color:var(--accent);}
+.nav a {color:var(--muted); margin-left:15px; text-decoration:none;}
+.nav a:hover {color:white}
+
+/* Hero */
+.hero {
+  text-align:center;
+  padding:80px 20px;
+}
+.hero h1 {font-size:42px;}
+.hero p {color:var(--muted);}
+
+/* Card */
+.card {
+  background:var(--card);
+  padding:25px;
+  border-radius:12px;
+  max-width:400px;
+  margin:30px auto;
+}
+
+/* Inputs */
+input {
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:8px;
+  border:none;
+  background:#020617;
+  color:white;
+}
+
+/* Buttons */
+button {
+  padding:10px;
+  width:48%;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+.login {background:#22c55e;}
+.signup {background:#6366f1; color:white}
+
+/* Timer */
+.timer {
+  font-size:60px;
+  text-align:center;
+  margin-top:20px;
+}
+
+/* Footer */
+footer {
+  text-align:center;
+  padding:20px;
+  margin-top:50px;
+  border-top:1px solid #1e293b;
+}
+</style>
 </head>
+
 <body>
-<div style="text-align:center; margin-top:40px;">
-  <h2>Login / Signup</h2>
 
-  <input id="username" placeholder="Username"><br><br>
-  <input id="password" type="password" placeholder="Password"><br><br>
-
-  <button onclick="signup()">Signup</button>
-  <button onclick="login()">Login</button>
+<!-- NAV -->
+<div class="nav">
+  <h2>FocusZone</h2>
+  <div>
+    <a href="#">Home</a>
+    <a href="#login">Login</a>
+  </div>
 </div>
-<h1>Frontend → Backend Test 🚀</h1>
 
-<button onclick="sendData()">Send Data</button>
+<!-- HERO -->
+<div class="hero">
+  <h1>Deep Work System</h1>
+  <p>Focus. Track. Improve productivity.</p>
+</div>
 
-<p id="result"></p>
+<!-- LOGIN -->
+<div class="card" id="login">
+  <h3>Login / Signup</h3>
+
+  <input id="username" placeholder="Username">
+  <input id="password" type="password" placeholder="Password">
+
+  <div style="display:flex; gap:10px;">
+    <button class="signup" onclick="signup()">Signup</button>
+    <button class="login" onclick="login()">Login</button>
+  </div>
+</div>
+
+<!-- TIMER -->
+<div class="card">
+  <h3>Focus Timer</h3>
+  <div class="timer" id="time">25:00</div>
+
+  <button onclick="start()">Start</button>
+  <button onclick="reset()">Reset</button>
+</div>
+
+<footer>
+  © 2026 FocusZone | DevOps Project
+</footer>
 
 <script>
-const BASE_URL = "https://devops-backend-iigs.onrender.com";
+const BASE = "https://devops-backend-iigs.onrender.com";
 
-// SIGNUP
-function signup() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-
-  fetch(BASE_URL + "/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ username, password })
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert(data.message);
-  });
+/* AUTH */
+function signup(){
+  fetch(BASE+"/signup",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      username:username.value,
+      password:password.value
+    })
+  }).then(r=>r.json()).then(d=>alert(d.message));
 }
 
-// LOGIN
-function login() {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-
-  fetch(BASE_URL + "/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ username, password })
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert(data.message);
-  });
+function login(){
+  fetch(BASE+"/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      username:username.value,
+      password:password.value
+    })
+  }).then(r=>r.json()).then(d=>alert(d.message));
 }
+
+/* TIMER */
+let time=1500, interval;
+
+function update(){
+  let m=Math.floor(time/60);
+  let s=time%60;
+  document.getElementById("time").innerText=
+    `${m}:${s<10?"0":""}${s}`;
+}
+
+function start(){
+  interval=setInterval(()=>{
+    if(time>0){time--; update();}
+  },1000);
+}
+
+function reset(){
+  clearInterval(interval);
+  time=1500;
+  update();
+}
+
+update();
 </script>
+
 </body>
 </html>

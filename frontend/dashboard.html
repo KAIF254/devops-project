@@ -9,7 +9,7 @@ button {padding:10px; margin:10px;}
 </head>
 
 <body>
-
+<canvas id="chart" width="300"></canvas>
 <h1>Dashboard</h1>
 
 <p id="user"></p>
@@ -19,23 +19,13 @@ button {padding:10px; margin:10px;}
 <button onclick="logout()">Logout</button>
 
 <script>
-let user = localStorage.getItem("user");
-let time = localStorage.getItem("time") || 0;
+let canvas = document.getElementById("chart");
+let ctx = canvas.getContext("2d");
 
-document.getElementById("user").innerText = "User: " + user;
-document.getElementById("time").innerText = "Focus Time: " + time;
+let t = localStorage.getItem("time") || 0;
 
-function addTime(){
-  time = Number(time) + 10;
-  localStorage.setItem("time", time);
-  document.getElementById("time").innerText = "Focus Time: " + time;
-}
-
-function logout(){
-  localStorage.clear();
-  window.location.href = "index.html";
-}
+ctx.fillStyle = "cyan";
+ctx.fillRect(50, 200 - t/10, 50, t/10);
 </script>
-
 </body>
 </html>

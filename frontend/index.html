@@ -20,22 +20,42 @@
 <p id="result"></p>
 
 <script>
-function sendData() {
-  const data = { name: "Kaif", time: 120 };
+const BASE_URL = "https://devops-backend-iigs.onrender.com";
 
-  fetch("https://devops-backend-iigs.onrender.com/data", {
+// SIGNUP
+function signup() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  fetch(BASE_URL + "/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify({ username, password })
   })
   .then(res => res.json())
-  .then(res => {
-    alert(res.message);
-    console.log(res);
+  .then(data => {
+    alert(data.message);
+  });
+}
+
+// LOGIN
+function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  fetch(BASE_URL + "/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ username, password })
   })
-  .catch(err => console.error(err));
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message);
+  });
 }
 </script>
 </body>

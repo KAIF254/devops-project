@@ -1,4 +1,4 @@
-name: Deploy DevOps Project
+name: DevOps CI/CD Pipeline
 
 on:
   push:
@@ -10,11 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build Docker Image
-        run: docker build -t my-backend ./backend
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
-      - name: Run Container
-        run: docker run -d -p 5000:5000 my-backend
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm install
+
+      - name: Build Docker image
+        run: |
+          cd backend
+          docker build -t my-backend .
+
+      - name: Run container (test)
+        run: |
+          docker run -d -p 5000:5000 my-backend
+
+      - name: Test API
+        run: |
+          sleep 5
+          curl http://localhost:5000

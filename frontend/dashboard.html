@@ -1,31 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Dashboard</title>
-<style>
-body {background:#0f172a; color:white; text-align:center;}
-button {padding:10px; margin:10px;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<canvas id="chart" width="300"></canvas>
-<h1>Dashboard</h1>
 
-<p id="user"></p>
-<p id="time">Focus Time: 0 sec</p>
+<div class="dashboard">
 
-<button onclick="addTime()">+10 sec</button>
-<button onclick="logout()">Logout</button>
+  <h1>DevOps Monitoring Dashboard</h1>
 
-<script>
-let canvas = document.getElementById("chart");
-let ctx = canvas.getContext("2d");
+  <div class="cards">
 
-let t = localStorage.getItem("time") || 0;
+    <div class="card">
+      <h2>CPU Usage</h2>
+      <p>45%</p>
+    </div>
 
-ctx.fillStyle = "cyan";
-ctx.fillRect(50, 200 - t/10, 50, t/10);
-</script>
+    <div class="card">
+      <h2>RAM Usage</h2>
+      <p>60%</p>
+    </div>
+
+    <div class="card">
+      <h2>Server Status</h2>
+      <p>Online ✅</p>
+    </div>
+
+  </div>
+
+</div>
+
 </body>
 </html>

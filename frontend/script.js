@@ -16,5 +16,9 @@ async function login() {
 
   const data = await response.json();
 
-  document.getElementById("message").innerText = data.message;
+  if(response.ok) {
+    window.location.href = "dashboard.html";
+  } else {
+    document.getElementById("message").innerText = data.message;
+  }
 }
